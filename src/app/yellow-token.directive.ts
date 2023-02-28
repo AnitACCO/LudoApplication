@@ -6,7 +6,7 @@ import { Directive, ElementRef } from '@angular/core';
 export class YellowTokenDirective {
 
   constructor(private el: ElementRef) {
-    this.el.nativeElement.style.backgroundColor = 'yellow';
+    this.el.nativeElement.style.color = 'yellow';
   }
 
 }

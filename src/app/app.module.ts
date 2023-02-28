@@ -8,6 +8,7 @@ import { TokenDirective } from './token.directive';
 import { BlueTokenDirective } from './blue-token.directive';
 import { YellowTokenDirective } from './yellow-token.directive';
 import { GreenTokenDirective } from './green-token.directive';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { GreenTokenDirective } from './green-token.directive';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

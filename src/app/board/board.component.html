@@ -1,47 +1,58 @@
 <h1 style="text-align: center;">Ludo Application</h1>
 
-<table style="width: 24em;margin-left: auto;
-margin-right: auto; margin-top: 2%;">
+<table >
 
-  <tr *ngFor="let num2 of numbers2" style="width: 2em; height: 2em;">
+  <tr *ngFor="let num2 of numbers2">
     <td style="width: 2em" *ngFor="let num of numbers" [ngStyle]="{'border': ((num > 4 && num<7) || (num2  > 4 && num2<7)) && !( num>4 && num<7 && num2>4 && num2<7) ?   ' 1px solid black' : ''}" >
       <button id = "red1" [disabled]="red_token_status[0]" *ngIf="((num2==red_token[0][0] && num == red_token[0][1]))
-         " ng-hide = "red_completed[0]" appToken style="width: 1em; height: 1em; display: inline-table; margin-left: auto;  margin-right: auto;" (click) = "tokenPlay(red_token[0][2])"></button>
+         " ng-hide = "red_completed[0]"   (click) = "tokenPlay(red_token[0][2])"><fa-icon [icon]="faChessPawn" appToken></fa-icon></button>
       <button id = "red2" [disabled]="red_token_status[1]" *ngIf="((num2==red_token[1][0] && num == red_token[1][1]))
-        " ng-hide = "red_completed[1]"appToken style="width: 1em; height: 1em; display: inline-table; margin-left: auto;  margin-right: auto;" (click) = "tokenPlay(red_token[1][2])"></button>
-      <button id = "red3" [disabled]="red_token_status[2]" *ngIf="((num2==red_token[2][0] && num == red_token[2][1]))
-        " ng-hide = "red_completed[2]" appToken style="width: 1em; height: 1em; display: inline-table; margin-left: auto;  margin-right: auto;" (click) = "tokenPlay(red_token[2][2])"></button>
+        " ng-hide = "red_completed[1]"  (click) = "tokenPlay(red_token[1][2])"><fa-icon [icon]="faChessPawn" appToken></fa-icon></button>
+        <button id = "red3" [disabled]="red_token_status[2]" *ngIf="((num2==red_token[2][0] && num == red_token[2][1]))
+        " ng-hide = "red_completed[2]"   (click) = "tokenPlay(red_token[2][2])"><fa-icon [icon]="faChessPawn" appToken></fa-icon></button>
       <button id = "red4" [disabled]="red_token_status[3]" *ngIf="((num2==red_token[3][0] && num == red_token[3][1]))
-        " ng-hide = "red_completed[3]"  appToken style="width: 1em; height: 1em; display: inline-table; margin-left: auto;  margin-right: auto;" (click) = "tokenPlay(red_token[3][2])"></button>
-      <button id = "blue1" [disabled]="blue_token_status[0]"  *ngIf="((num2==blue_token[0][0] && num == blue_token[0][1]))"
-      ng-hide = "blue_completed[0]"  appBlueToken style="width: 1em; height: 1em; display: inline-table; margin-left: auto;  margin-right: auto;" (click) = "tokenPlay(blue_token[0][2])"></button>
-      <button id = "blue2" [disabled]="blue_token_status[1]" *ngIf="((num2==blue_token[1][0] && num == blue_token[1][1]))"
-      ng-hide = "blue_completed[1]"  appBlueToken style="width: 1em; height: 1em; display: inline-table; margin-left: auto;  margin-right: auto;" (click) = "tokenPlay(blue_token[1][2])"></button>
-      <button id = "blue3" [disabled]="blue_token_status[2]" *ngIf="((num2==blue_token[2][0] && num == blue_token[2][1]))"
-      ng-hide = "blue_completed[2]"  appBlueToken style="width: 1em; height: 1em; display: inline-table; margin-left: auto;  margin-right: auto;" (click) = "tokenPlay(blue_token[2][2])"></button>
-      <button id = "blue4" [disabled]="blue_token_status[3]" *ngIf="((num2==blue_token[3][0] && num == blue_token[3][1]))"
-      ng-hide = "blue_completed[3]"  appBlueToken style="width: 1em; height: 1em; display: inline-table; margin-left: auto;  margin-right: auto;" (click) = "tokenPlay(blue_token[3][2])"></button>
+        " ng-hide = "red_completed[3]"    (click) = "tokenPlay(red_token[3][2])"><fa-icon [icon]="faChessPawn" appToken></fa-icon></button>
+
+        <button id = "blue1" [disabled]="blue_token_status[0]"  *ngIf="((num2==blue_token[0][0] && num == blue_token[0][1]))"
+        ng-hide = "blue_completed[0]"    (click) = "tokenPlay(blue_token[0][2])"><fa-icon [icon]="faChessPawn" appBlueToken></fa-icon></button>
+        <button id = "blue2" [disabled]="blue_token_status[1]" *ngIf="((num2==blue_token[1][0] && num == blue_token[1][1]))"
+        ng-hide = "blue_completed[1]"    (click) = "tokenPlay(blue_token[1][2])"><fa-icon [icon]="faChessPawn" appBlueToken></fa-icon></button>
+        <button id = "blue3" [disabled]="blue_token_status[2]" *ngIf="((num2==blue_token[2][0] && num == blue_token[2][1]))"
+        ng-hide = "blue_completed[2]"    (click) = "tokenPlay(blue_token[2][2])"><fa-icon [icon]="faChessPawn" appBlueToken></fa-icon></button>
+        <button id = "blue4" [disabled]="blue_token_status[3]" *ngIf="((num2==blue_token[3][0] && num == blue_token[3][1]))"
+        ng-hide = "blue_completed[3]"    (click) = "tokenPlay(blue_token[3][2])"><fa-icon [icon]="faChessPawn" appBlueToken></fa-icon></button>
+
       <button id = "yellow1" [disabled]="yellow_token_status[0]" *ngIf="((num2==yellow_token[0][0] && num == yellow_token[0][1]))"
-      ng-hide = "yellow_completed[0]" appYellowToken style="width: 1em; height: 1em; display: inline-table; margin-left: auto;  margin-right: auto;" (click) = "tokenPlay(yellow_token[0][2])"></button>
+      ng-hide = "yellow_completed[0]" (click) = "tokenPlay(yellow_token[0][2])"><fa-icon [icon]="faChessPawn" appYellowToken></fa-icon></button>
       <button id = "yellow2" [disabled]="yellow_token_status[1]" *ngIf="((num2==yellow_token[1][0] && num == yellow_token[1][1]))"
-      ng-hide = "yellow_completed[1]" appYellowToken style="width: 1em; height: 1em; display: inline-table; margin-left: auto;  margin-right: auto;" (click) = "tokenPlay(yellow_token[1][2])"></button>
+      ng-hide = "yellow_completed[1]"  (click) = "tokenPlay(yellow_token[1][2])"><fa-icon [icon]="faChessPawn" appYellowToken></fa-icon></button>
       <button id = "yellow3" [disabled]="yellow_token_status[2]" *ngIf="((num2==yellow_token[2][0] && num == yellow_token[2][1]))"
-      ng-hide = "yellow_completed[2]" appYellowToken style="width: 1em; height: 1em; display: inline-table; margin-left: auto;  margin-right: auto;" (click) = "tokenPlay(yellow_token[2][2])"></button>
+      ng-hide = "yellow_completed[2]"  (click) = "tokenPlay(yellow_token[2][2])"><fa-icon [icon]="faChessPawn" appYellowToken></fa-icon></button>
       <button id = "yellow4" [disabled]="yellow_token_status[3]" *ngIf="((num2==yellow_token[3][0] && num == yellow_token[3][1]))"
-      ng-hide = "yellow_completed[3]" appYellowToken style="width: 1em; height: 1em; display: inline-table; margin-left: auto;  margin-right: auto;" (click) = "tokenPlay(yellow_token[3][2])"></button>
+      ng-hide = "yellow_completed[3]"  (click) = "tokenPlay(yellow_token[3][2])"><fa-icon [icon]="faChessPawn" appYellowToken></fa-icon></button>
+
       <button id = "green1" [disabled]="green_token_status[0]" *ngIf="((num2==green_token[0][0] && num == green_token[0][1]))"
-      ng-hide = "green_completed[0]"  appGreenToken style="width: 1em; height: 1em; display: inline-table; margin-left: auto;  margin-right: auto;" (click) = "tokenPlay(green_token[0][2])"></button>
+      ng-hide = "green_completed[0]"  (click) = "tokenPlay(green_token[0][2])"><fa-icon [icon]="faChessPawn" appGreenToken></fa-icon></button>
       <button id = "green2" [disabled]="green_token_status[1]" *ngIf="((num2==green_token[1][0] && num == green_token[1][1]))"
-      ng-hide = "green_completed[1]"  appGreenToken style="width: 1em; height: 1em; display: inline-table; margin-left: auto;  margin-right: auto;" (click) = "tokenPlay(green_token[1][2])"></button>
+      ng-hide = "green_completed[1]"   (click) = "tokenPlay(green_token[1][2])"><fa-icon [icon]="faChessPawn" appGreenToken></fa-icon></button>
       <button id = "green3" [disabled]="green_token_status[2]" *ngIf="((num2==green_token[2][0] && num == green_token[2][1]))"
-      ng-hide = "green_completed[2]"  appGreenToken style="width: 1em; height: 1em; display: inline-table; margin-left: auto;  margin-right: auto;" (click) = "tokenPlay(green_token[2][2])"></button>
+      ng-hide = "green_completed[2]"   (click) = "tokenPlay(green_token[2][2])"><fa-icon [icon]="faChessPawn" appGreenToken></fa-icon></button>
       <button id = "green4" [disabled]="green_token_status[3]" *ngIf="((num2==green_token[3][0] && num == green_token[3][1]))"
-      ng-hide = "green_completed[3]"  appGreenToken style="width: 1em; height: 1em; display: inline-table; margin-left: auto;  margin-right: auto;" (click) = "tokenPlay(green_token[3][2])"></button>
+      ng-hide = "green_completed[3]"   (click) = "tokenPlay(green_token[3][2])"><fa-icon [icon]="faChessPawn" appGreenToken></fa-icon></button>
+
     </td>
   </tr>
 </table>
 
-<h4 style="margin-left: 47.5%; margin-right: 46%; margin-top: 1%; margin-bottom:1% ;"> value : - {{dice_numbers}}</h4>
+<h4 style="margin-left: 46%;  margin-top: 1%;"> player {{player_turn[num]}} turn</h4>
 
-<button [disabled] = "diceRoll" id = "diceButton" style="margin-left: 48%;
-margin-right: 48%; margin-top: 0%;" (click)="rollDice()" id = "dice">Roll A Dice</button>
+<button [disabled] = "diceRoll" id = "diceButton" style=" float: left;;margin-left: 47%; width: 6%; margin-right: 2%; margin-top: 0%;" (click)="rollDice()" id = "dice">Roll A Dice</button>
+
+<div style="margin-left: 5%;">
+  <fa-icon style="font-size: 35px;" *ngIf = "dice_numbers == 6" [icon] = "faDice6"></fa-icon>
+  <fa-icon style="font-size: 35px;" *ngIf = "dice_numbers == 5" [icon] = "faDice5"></fa-icon>
+  <fa-icon style="font-size: 35px;" *ngIf = "dice_numbers == 4" [icon] = "faDice4"></fa-icon>
+  <fa-icon style="font-size: 35px;" *ngIf = "dice_numbers == 3" [icon] = "faDice3"></fa-icon>
+  <fa-icon style="font-size: 35px;" *ngIf = "dice_numbers == 2" [icon] = "faDice2"></fa-icon>
+  <fa-icon style="font-size: 35px;" *ngIf = "dice_numbers == 1" [icon] = "faDice1"></fa-icon>
+</div>
