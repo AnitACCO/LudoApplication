@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { faChessPawn } from '@fortawesome/free-regular-svg-icons';
 import { faDiceFive, faDiceFour, faDiceOne, faDiceSix, faDiceThree, faDiceTwo } from '@fortawesome/free-solid-svg-icons';
-import { delay } from 'rxjs';
 
 @Component({
   selector: 'app-board',
@@ -20,6 +19,7 @@ export class BoardComponent {
 
   safepos = [[5, 0], [0, 6], [6, 11], [11, 5], [-1, -1]]
   player_turn = ['red', 'blue', 'green', 'yellow']
+  buttonArray = Array(4).fill(0).map((x, i) => i);
   numbers = Array(12).fill(0).map((x, i) => i);
   numbers2 = Array(12).fill(0).map((x, i) => i);
   dice_numbers: number = 0
@@ -48,79 +48,42 @@ export class BoardComponent {
   yellow_count = 0
 
   turn_order = [[11, 5], [5, 0], [0, 6], [6, 11]]
-
+  alltokenrArray = [this.red_token,this.blue_token,this.green_token,this.yellow_token]
+  allTokenStart = [this.red_token_start,this.blue_token_start,this.green_token_start,this.yellow_token_start]
   flag = 0
   diceRoll = false
   num = 0
   playing_token = this.red_token
   playing_token_status = this.red_token_status
 
+
   rollDice() {
     this.dice_numbers = Math.floor(Math.random() * (7 - 1) + 1);
-    //this.dice_numbers = 6
-    if (this.num == 0) {
+     if (this.num == 0) {
       this.playing_token = this.red_token
+      this.playing_token_status = this.red_token_status
       if (this.dice_numbers == 6) {
         this.flag = 4
-        if (this.red_token[0][1] == 6 && this.red_token[0][0] > 6 && !(this.red_completed[0])) {
-          this.flag -= 1
-        }
-        else {
-          this.red_token_status[0] = false
-        }
-        if (this.red_token[1][1] == 6 && this.red_token[1][0] > 6 && !(this.red_completed[1])) {
-          this.flag -= 1
-        }
-        else {
-          this.red_token_status[1] = false
-        }
-        if (this.red_token[2][1] == 6 && this.red_token[2][0] > 6 && !(this.red_completed[2])) {
-          this.flag -= 1
-        }
-        else {
-          this.red_token_status[2] = false
-        }
-        if (this.red_token[3][1] == 6 && this.red_token[3][0] > 6 && !(this.red_completed[3])) {
-          this.flag -= 1
-        }
-        else {
-          this.red_token_status[3] = false
+        for(let i = 0; i < 4; i++ ){
+          if (this.red_token[i][1] == 6 && this.red_token[i][0] > 6 && !(this.red_completed[i])) {
+            this.flag -= 1
+          }
+          else {
+            this.red_token_status[i] = false
+          }
         }
         if (this.flag != 0) {
           this.flag = 6
         }
       }
       else {
-        if (!(this.red_completed[0])) {
-          if (!(this.red_token[0][0] == this.red_token_start[0][0] && this.red_token[0][1] == this.red_token_start[0][1])) {
-            if (!(this.red_token[0][1] == 6 && this.red_token[0][0] + this.dice_numbers > 12)) {
-              console.log((this.red_token[0][0] == this.red_token_start[0][0] && this.red_token[0][1] == this.red_token_start[0][0]))
-              this.red_token_status[0] = false;
-              this.flag = 1;
-            }
-          }
-        }
-        if (!(this.red_completed[1])) {
-          if (!(this.red_token[1][0] == this.red_token_start[1][0] && this.red_token[1][1] == this.red_token_start[1][1])) {
-            if (!(this.red_token[1][1] == 6 && this.red_token[1][0] + this.dice_numbers > 12)) {
-              this.red_token_status[1] = false;
-              this.flag = 1;
-            }
-          }
-        }
-        if (!(this.red_completed[2])) {
-          if (!(this.red_token[2][0] == this.red_token_start[2][0] && this.red_token[2][1] == this.red_token_start[2][1])) {
-            if (!(this.red_token[2][1] == 6 && this.red_token[2][0] + this.dice_numbers > 12)) {
-              this.red_token_status[2] = false;
-              this.flag = 1;
-            }
-          }
-        }
-        if (!(this.red_completed[3])) {
-          if (!(this.red_token[3][0] == this.red_token_start[3][0] && this.red_token[3][1] == this.red_token_start[3][1])) {
-            if (!(this.red_token[3][1] == 6 && this.red_token[3][0] + this.dice_numbers > 12)) {
-              this.red_token_status[3] = false;
-              this.flag = 1;
+        for(let i = 0; i < 4; i++ ){
+          if (!(this.red_completed[i])) {
+            if (!(this.red_token[i][0] == this.red_token_start[i][0] && this.red_token[i][1] == this.red_token_start[i][1])) {
+              if (!(this.red_token[i][1] == 6 && this.red_token[i][0] + this.dice_numbers > 12)) {
+                this.red_token_status[i] = false;
+                this.flag = 1;
+              }
             }
           }
         }
@@ -128,67 +91,30 @@ export class BoardComponent {
     }
     if (this.num == 1) {
       this.playing_token = this.blue_token
+      this.playing_token_status = this.blue_token_status
       if (this.dice_numbers == 6) {
         this.flag = 4
-        if (this.blue_token[0][0] == 6 && this.blue_token[0][1] < 5 && !(this.blue_completed[0])) {
-          this.flag -= 1
-        }
-        else {
-          this.blue_token_status[0] = false
-        }
-        if (this.blue_token[1][0] == 6 && this.blue_token[1][1] < 5 && !(this.blue_completed[1])) {
-          this.flag -= 1
-        }
-        else {
-          this.blue_token_status[1] = false
-        }
-        if (this.blue_token[2][0] == 6 && this.blue_token[2][1] < 5 && !(this.blue_completed[2])) {
-          this.flag -= 1
-        }
-        else {
-          this.blue_token_status[2] = false
-        }
-        if (this.blue_token[3][0] == 6 && this.blue_token[3][1] < 5 && !(this.blue_completed[3])) {
-          this.flag -= 1
-        }
-        else {
-          this.blue_token_status[3] = false
+        for (let i = 0; i < 4; i++){
+          if (this.blue_token[i][0] == 6 && this.blue_token[i][1] < 5 && !(this.blue_completed[i])) {
+            this.flag -= 1
+          }
+          else {
+            this.blue_token_status[i] = false
+          }
         }
         if (this.flag != 0) {
           this.flag = 6
         }
       }
       else {
-        if (!(this.blue_completed[0])) {
-          if (!(this.blue_token[0][0] == this.blue_token_start[0][0] && this.blue_token[0][1] == this.blue_token_start[0][1])) {
-            if (!(this.blue_token[0][0] == 6 && this.blue_token[0][1] - this.dice_numbers < -1)) {
-              console.log((this.blue_token[0][0] == this.blue_token_start[0][0] && this.blue_token[0][1] == this.blue_token_start[0][0]))
-              this.blue_token_status[0] = false;
-              this.flag = 1;
-            }
-          }
-        }
-        if (!(this.blue_completed[1])) {
-          if (!(this.blue_token[1][0] == this.blue_token_start[1][0] && this.blue_token[1][1] == this.blue_token_start[1][1])) {
-            if (!(this.blue_token[1][0] == 6 && this.blue_token[1][1] - this.dice_numbers < -1)) {
-              this.blue_token_status[1] = false;
-              this.flag = 1;
-            }
-          }
-        }
-        if (!(this.blue_completed[2])) {
-          if (!(this.blue_token[2][0] == this.blue_token_start[2][0] && this.blue_token[2][1] == this.blue_token_start[2][1])) {
-            if (!(this.blue_token[2][0] == 6 && this.blue_token[2][1] - this.dice_numbers < -1)) {
-              this.blue_token_status[2] = false;
-              this.flag = 1;
-            }
-          }
-        }
-        if (!(this.blue_completed[0])) {
-          if (!(this.blue_token[3][0] == this.blue_token_start[3][0] && this.blue_token[3][1] == this.blue_token_start[3][1])) {
-            if (!(this.blue_token[3][0] == 6 && this.blue_token[3][1] - this.dice_numbers < -1)) {
-              this.blue_token_status[3] = false;
-              this.flag = 1;
+        for(let i =0 ; i <4 ; i++){
+          if (!(this.blue_completed[i])) {
+            if (!(this.blue_token[i][0] == this.blue_token_start[i][0] && this.blue_token[i][1] == this.blue_token_start[i][1])) {
+              if (!(this.blue_token[i][0] == 6 && this.blue_token[i][1] - this.dice_numbers < -1)) {
+                console.log((this.blue_token[i][0] == this.blue_token_start[i][0] && this.blue_token[i][1] == this.blue_token_start[i][0]))
+                this.blue_token_status[i] = false;
+                this.flag = 1;
+              }
             }
           }
         }
@@ -196,67 +122,29 @@ export class BoardComponent {
     }
     if (this.num == 2) {
       this.playing_token = this.green_token
+      this.playing_token_status = this.green_token_status
       if (this.dice_numbers == 6) {
         this.flag = 4
-        if (this.green_token[0][1] == 5 && this.green_token[0][0] < 5 && !(this.green_completed[0])) {
-          this.flag -= 1
-        }
-        else {
-          this.green_token_status[0] = false
-        }
-        if (this.green_token[1][1] == 5 && this.green_token[1][0] < 5 && !(this.green_completed[1])) {
-          this.flag -= 1
-        }
-        else {
-          this.green_token_status[1] = false
-        }
-        if (this.green_token[2][1] == 5 && this.green_token[2][0] < 5 && !(this.green_completed[2])) {
-          this.flag -= 1
-        }
-        else {
-          this.green_token_status[2] = false
-        }
-        if (this.green_token[3][1] == 5 && this.green_token[3][0] < 5 && !(this.green_completed[3])) {
-          this.flag -= 1
-        }
-        else {
-          this.green_token_status[3] = false
+        for(let i = 0 ; i < 4; i++){
+          if (this.green_token[i][1] == 5 && this.green_token[i][0] < 5 && !(this.green_completed[i])) {
+            this.flag -= 1
+          }
+          else {
+            this.green_token_status[i] = false
+          }
         }
         if (this.flag != 0) {
           this.flag = 6
         }
       }
       else {
-        if (!(this.green_completed[0])) {
-          if (!(this.green_token[0][0] == this.green_token_start[0][0] && this.green_token[0][1] == this.green_token_start[0][1])) {
-            if (!(this.green_token[0][1] == 5 && this.green_token[0][0] - this.dice_numbers < -1)) {
-              console.log((this.green_token[0][0] == this.green_token_start[0][0] && this.green_token[0][1] == this.green_token_start[0][0]))
-              this.green_token_status[0] = false;
-              this.flag = 1;
-            }
-          }
-        }
-        if (!(this.green_completed[1])) {
-          if (!(this.green_token[1][0] == this.green_token_start[1][0] && this.green_token[1][1] == this.green_token_start[1][1])) {
-            if (!(this.green_token[1][1] == 5 && this.green_token[1][0] - this.dice_numbers < -1)) {
-              this.green_token_status[1] = false;
-              this.flag = 1;
-            }
-          }
-        }
-        if (!(this.green_completed[2])) {
-          if (!(this.green_token[2][0] == this.green_token_start[2][0] && this.green_token[2][1] == this.green_token_start[2][1])) {
-            if (!(this.green_token[2][1] == 5 && this.green_token[2][0] - this.dice_numbers < -1)) {
-              this.green_token_status[2] = false;
-              this.flag = 1;
-            }
-          }
-        }
-        if (!(this.green_completed[3])) {
-          if (!(this.green_token[3][0] == this.green_token_start[3][0] && this.green_token[3][1] == this.green_token_start[3][1])) {
-            if (!(this.green_token[3][1] == 5 && this.green_token[3][0] - this.dice_numbers < -1)) {
-              this.green_token_status[3] = false;
-              this.flag = 1;
+        for (let i = 0; i < 4; i++){
+          if (!(this.green_completed[i])) {
+            if (!(this.green_token[i][0] == this.green_token_start[i][0] && this.green_token[i][1] == this.green_token_start[i][1])) {
+              if (!(this.green_token[i][1] == 5 && this.green_token[i][0] - this.dice_numbers < -1)) {
+                this.green_token_status[i] = false;
+                this.flag = 1;
+              }
             }
           }
         }
@@ -264,67 +152,29 @@ export class BoardComponent {
     }
     if (this.num == 3) {
       this.playing_token = this.yellow_token
+      this.playing_token_status = this.yellow_token_status
       if (this.dice_numbers == 6) {
         this.flag = 4
-        if (this.yellow_token[0][0] == 5 && this.yellow_token[0][1] > 6 && !(this.yellow_completed[0])) {
-          this.flag -= 1
-        }
-        else {
-          this.yellow_token_status[0] = false
-        }
-        if (this.yellow_token[1][0] == 5 && this.yellow_token[1][1] > 6 && !(this.yellow_completed[1])) {
-          this.flag -= 1
-        }
-        else {
-          this.yellow_token_status[1] = false
-        }
-        if (this.yellow_token[2][0] == 5 && this.yellow_token[2][1] > 6 && !(this.yellow_completed[2])) {
-          this.flag -= 1
-        }
-        else {
-          this.yellow_token_status[2] = false
-        }
-        if (this.yellow_token[3][0] == 5 && this.yellow_token[3][1] > 6 && !(this.yellow_completed[3])) {
-          this.flag -= 1
-        }
-        else {
-          this.yellow_token_status[3] = false
+        for (let i = 0; i < 4; i++){
+          if (this.yellow_token[i][0] == 5 && this.yellow_token[i][1] > 6 && !(this.yellow_completed[i])) {
+            this.flag -= 1
+          }
+          else {
+            this.yellow_token_status[i] = false
+          }
         }
         if (this.flag != 0) {
           this.flag = 6
         }
       }
       else {
-        if (!(this.yellow_completed[0])) {
-          if (!(this.yellow_token[0][0] == this.yellow_token_start[0][0] && this.yellow_token[0][1] == this.yellow_token_start[0][1])) {
-            if (!(this.yellow_token[0][0] == 5 && this.yellow_token[0][1] + this.dice_numbers > 12)) {
-              console.log((this.yellow_token[0][0] == this.yellow_token_start[0][0] && this.yellow_token[0][1] == this.yellow_token_start[0][0]))
-              this.yellow_token_status[0] = false;
-              this.flag = 1;
-            }
-          }
-        }
-        if (!(this.yellow_completed[1])) {
-          if (!(this.yellow_token[1][0] == this.yellow_token_start[1][0] && this.yellow_token[1][1] == this.yellow_token_start[1][1])) {
-            if (!(this.yellow_token[1][0] == 5 && this.yellow_token[1][1] + this.dice_numbers > 12)) {
-              this.yellow_token_status[1] = false;
-              this.flag = 1;
-            }
-          }
-        }
-        if (!(this.yellow_completed[2])) {
-          if (!(this.yellow_token[2][0] == this.yellow_token_start[2][0] && this.yellow_token[2][1] == this.yellow_token_start[2][1])) {
-            if (!(this.yellow_token[2][0] == 5 && this.yellow_token[2][1] + this.dice_numbers > 12)) {
-              this.yellow_token_status[2] = false;
-              this.flag = 1;
-            }
-          }
-        }
-        if (!(this.yellow_completed[3])) {
-          if (!(this.yellow_token[3][0] == this.yellow_token_start[3][0] && this.yellow_token[3][1] == this.yellow_token_start[3][1])) {
-            if (!(this.yellow_token[3][0] == 5 && this.yellow_token[3][1] + this.dice_numbers > 12)) {
-              this.yellow_token_status[3] = false;
-              this.flag = 1;
+        for (let i = 0; i <4;i++){
+          if (!(this.yellow_completed[i])) {
+            if (!(this.yellow_token[i][0] == this.yellow_token_start[i][0] && this.yellow_token[i][1] == this.yellow_token_start[i][1])) {
+              if (!(this.yellow_token[i][0] == 5 && this.yellow_token[i][1] + this.dice_numbers > 12)) {
+                this.yellow_token_status[i] = false;
+                this.flag = 1;
+              }
             }
           }
         }
@@ -346,7 +196,6 @@ export class BoardComponent {
       this.dice_numbers = 0
     }
     else {
-      console.log(this.dice_numbers)
       while (this.dice_numbers) {
         if (this.playing_token[id][1] == 5) {
           if (this.playing_token[id][0] == 7) {
@@ -415,7 +264,6 @@ export class BoardComponent {
           }
         }
         this.dice_numbers = this.dice_numbers - 1
-        delay(10000);
       }
     }
     if (this.flag != 6) {
@@ -453,76 +301,14 @@ export class BoardComponent {
       || this.playing_token[id][0] == this.safepos[2][0] && this.playing_token[id][0] == this.safepos[2][0]
       || this.playing_token[id][0] == this.safepos[3][0] && this.playing_token[id][0] == this.safepos[3][0]
       || this.playing_token[id][0] == this.safepos[4][0] && this.playing_token[id][0] == this.safepos[4][0])) {
-      if (this.playing_token != this.red_token) {
-        if (this.playing_token[id][0] == this.red_token[0][0] && this.playing_token[id][1] == this.red_token[0][1]) {
-          this.red_token[0][0] = this.red_token_start[0][0]
-          this.red_token[0][1] = this.red_token_start[0][1]
-        }
-        if (this.playing_token[id][0] == this.red_token[1][0] && this.playing_token[id][1] == this.red_token[1][1]) {
-          this.red_token[1][0] = this.red_token_start[1][0]
-          this.red_token[1][1] = this.red_token_start[1][1]
-        }
-        if (this.playing_token[id][0] == this.red_token[2][0] && this.playing_token[id][1] == this.red_token[2][1]) {
-          this.red_token[2][0] = this.red_token_start[2][0]
-          this.red_token[2][1] = this.red_token_start[2][1]
-        }
-        if (this.playing_token[id][0] == this.red_token[3][0] && this.playing_token[id][1] == this.red_token[3][1]) {
-          this.red_token[3][0] = this.red_token_start[3][0]
-          this.red_token[3][1] = this.red_token_start[3][1]
-        }
-      }
-      if (this.playing_token != this.blue_token) {
-        if (this.playing_token[id][0] == this.blue_token[0][0] && this.playing_token[id][1] == this.blue_token[0][1]) {
-          this.blue_token[0][0] = this.blue_token_start[0][0]
-          this.blue_token[0][1] = this.blue_token_start[0][1]
-        }
-        if (this.playing_token[id][0] == this.blue_token[1][0] && this.playing_token[id][1] == this.blue_token[1][1]) {
-          this.blue_token[1][0] = this.blue_token_start[1][0]
-          this.blue_token[1][1] = this.blue_token_start[1][1]
-        }
-        if (this.playing_token[id][0] == this.blue_token[2][0] && this.playing_token[id][1] == this.blue_token[2][1]) {
-          this.blue_token[2][0] = this.blue_token_start[2][0]
-          this.blue_token[2][1] = this.blue_token_start[2][1]
-        }
-        if (this.playing_token[id][0] == this.blue_token[3][0] && this.playing_token[id][1] == this.blue_token[3][1]) {
-          this.blue_token[3][0] = this.blue_token_start[3][0]
-          this.blue_token[3][1] = this.blue_token_start[3][1]
-        }
-      }
-      if (this.playing_token != this.green_token) {
-        if (this.playing_token[id][0] == this.green_token[0][0] && this.playing_token[id][1] == this.green_token[0][1]) {
-          this.green_token[0][0] = this.green_token_start[0][0]
-          this.green_token[0][1] = this.green_token_start[0][1]
-        }
-        if (this.playing_token[id][0] == this.green_token[1][0] && this.playing_token[id][1] == this.green_token[1][1]) {
-          this.green_token[1][0] = this.green_token_start[1][0]
-          this.green_token[1][1] = this.green_token_start[1][1]
-        }
-        if (this.playing_token[id][0] == this.green_token[2][0] && this.playing_token[id][1] == this.green_token[2][1]) {
-          this.green_token[2][0] = this.green_token_start[2][0]
-          this.green_token[2][1] = this.green_token_start[2][1]
-        }
-        if (this.playing_token[id][0] == this.green_token[3][0] && this.playing_token[id][1] == this.green_token[3][1]) {
-          this.green_token[3][0] = this.green_token_start[3][0]
-          this.green_token[3][1] = this.green_token_start[3][1]
-        }
-      }
-      if (this.playing_token != this.yellow_token) {
-        if (this.playing_token[id][0] == this.yellow_token[0][0] && this.playing_token[id][1] == this.yellow_token[0][1]) {
-          this.yellow_token[0][0] = this.yellow_token_start[0][0]
-          this.yellow_token[0][1] = this.yellow_token_start[0][1]
-        }
-        if (this.playing_token[id][0] == this.yellow_token[1][0] && this.playing_token[id][1] == this.yellow_token[1][1]) {
-          this.yellow_token[1][0] = this.yellow_token_start[1][0]
-          this.yellow_token[1][1] = this.yellow_token_start[1][1]
-        }
-        if (this.playing_token[id][0] == this.yellow_token[2][0] && this.playing_token[id][1] == this.yellow_token[2][1]) {
-          this.yellow_token[2][0] = this.yellow_token_start[2][0]
-          this.yellow_token[2][1] = this.yellow_token_start[2][1]
-        }
-        if (this.playing_token[id][0] == this.yellow_token[3][0] && this.playing_token[id][1] == this.yellow_token[3][1]) {
-          this.yellow_token[3][0] = this.yellow_token_start[3][0]
-          this.yellow_token[3][1] = this.yellow_token_start[3][1]
+      for(let i = 0; i < 4;i++){
+        if (this.playing_token != this.alltokenrArray[i]) {
+          for(let j = 0; j < 4; j++){
+            if (this.playing_token[id][0] == this.alltokenrArray[i][0][0] && this.playing_token[id][1] == this.alltokenrArray[i][0][1]) {
+              this.alltokenrArray[i][j][0] = this.allTokenStart[i][j][0]
+              this.alltokenrArray[i][j][1] = this.allTokenStart[i][j][1]
+            }
+          }
         }
       }
     }
@@ -566,5 +352,4 @@ export class BoardComponent {
       }
     }
   }
-
 }
