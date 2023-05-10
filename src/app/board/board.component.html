@@ -1,34 +1,54 @@
-<h1 style="text-align: center;">Ludo Application</h1>
+<div class=" flex flex-row w-screen h-screen">
+  <div class="w-1/4" style="background-color: #d197bb;">
+    <h1 class="text-center font-bold  text-3xl mt-10">Let's Play</h1>
+    <h4 class="text-center font-bold text-xl mt-10" [ngStyle]="{'color': player_turn[num]}"> player {{player_turn[num]}}
+      turn</h4>
+    <div class="flex flex-row justify-center ">
+      <div>
+      <button [disabled]="diceRoll" id="diceButton" class="w-5/6 bg-black text-white rounded-lg text-center font-bold text-xl mt-10" (click)="rollDice()" id="dice">Roll A Dice</button>
+    </div>
+    <div class="mt-7">
+      <fa-icon style="font-size: 50px;" *ngIf="dice_numbers == 6" [icon]="faDice6"></fa-icon>
+      <fa-icon style="font-size: 50px;" *ngIf="dice_numbers == 5" [icon]="faDice5"></fa-icon>
+      <fa-icon style="font-size: 50px;" *ngIf="dice_numbers == 4" [icon]="faDice4"></fa-icon>
+      <fa-icon style="font-size: 50px;" *ngIf="dice_numbers == 3" [icon]="faDice3"></fa-icon>
+      <fa-icon style="font-size: 50px;" *ngIf="dice_numbers == 2" [icon]="faDice2"></fa-icon>
+      <fa-icon style="font-size: 50px;" *ngIf="dice_numbers == 1" [icon]="faDice1"></fa-icon>
+    </div>
+  </div>
+  </div>
+  <div class=" w-3/4 flex items-center py-6">
+    <table class="align-middle  w-4/6 h-full border-collapse border border-black">
 
-<table >
+      <tr *ngFor="let num2 of numbers2">
+        <td *ngFor="let num of numbers"
+          [ngStyle]="((num ==0  && num2<5) || (num ==4  && num2<5) || (num2 ==0  && num<5) || (num2 == 4 && num<5) || (num2 == 5 && num == 5) || (num2 == 2 && num == 2)) ?  { 'backgroundColor': 'blue'} : ((num ==0  && num2>6) || (num ==4  && num2>6) || (num2 ==7  && num<5) || (num2 == 11 && num<5) || (num2 == 6 && num == 5) || (num2 == 9 && num == 2)) ?  { 'backgroundColor': 'red'} : ((num == 7  && num2>6) || (num == 11 && num2>6) || (num2 ==7  && num>6) || (num2 == 11 && num>6) || (num2 == 6 && num == 6) || (num2 == 9 && num == 9)) ?  { 'backgroundColor': 'yellow'} : ((num2 ==0  && num>6) || (num2 ==4  && num>6) || (num ==7  && num2<5) || (num == 11 && num2<5) || (num == 6 && num2 == 5) || (num == 9 && num2 == 2)) ?  { 'backgroundColor': 'green'} : ((num == 0 && num2 == 5) || (num2 == 0 && num == 6) || (num == 11 && num2 == 6) || (num == 5 && num2 == 11) ) ? {'backgroundImage': 'url(https://t3.ftcdn.net/jpg/02/12/94/86/360_F_212948692_hmAugxE54yt4XGzqCeImTZjNyYkAX7S4.jpg)', 'background-size':' cover'} : {}"
+          [style]="{'border': ((num > 4 && num<7) || (num2  > 4 && num2<7)) && !( num>4 && num<7 && num2>4 && num2<7) ?   ' 1px solid black' : ''}">
+          <div class="flex items-center justify-center" *ngFor="let i of buttonArray"><button id="red1"
+              [disabled]="red_token_status[i]" *ngIf="((num2==red_token[i][0] && num == red_token[i][1]))"
+              ng-hide="red_completed[0]" (click)="tokenPlay(red_token[i][2])"><fa-icon class="px-1.5"
+                [style.border]="!red_token_status[i] ? '2px solid #000' : ''" [icon]="faChessPawn"
+                appToken></fa-icon></button></div>
 
-  <tr *ngFor="let num2 of numbers2">
-    <td style="width: 2em" *ngFor="let num of numbers" [ngStyle]="{'border': ((num > 4 && num<7) || (num2  > 4 && num2<7)) && !( num>4 && num<7 && num2>4 && num2<7) ?   ' 1px solid black' : ''}" >
-      <div *ngFor="let i of buttonArray"><button  id = "red1" [disabled]="red_token_status[i]" *ngIf="((num2==red_token[i][0] && num == red_token[i][1]))
-         " ng-hide = "red_completed[0]"   (click) = "tokenPlay(red_token[i][2])"><fa-icon [icon]="faChessPawn" appToken></fa-icon></button></div>
+          <div class="flex items-center justify-center" *ngFor="let i of buttonArray"><button id="blue1"
+              [disabled]="blue_token_status[i]" *ngIf="((num2==blue_token[i][0] && num == blue_token[i][1]))"
+              ng-hide="blue_completed[0]" (click)="tokenPlay(blue_token[i][2])"><fa-icon [icon]="faChessPawn" class="px-1.5"
+              [style.border]="!blue_token_status[i] ? '2px solid #000' : ''"
+                appBlueToken></fa-icon></button></div>
 
-        <div *ngFor="let i of buttonArray"><button id = "blue1" [disabled]="blue_token_status[i]"  *ngIf="((num2==blue_token[i][0] && num == blue_token[i][1]))"
-        ng-hide = "blue_completed[0]"    (click) = "tokenPlay(blue_token[i][2])"><fa-icon [icon]="faChessPawn" appBlueToken></fa-icon></button></div>
+          <div class="flex items-center justify-center" *ngFor="let i of buttonArray"><button id="yellow1"
+              [disabled]="yellow_token_status[i]" *ngIf="((num2==yellow_token[i][0] && num == yellow_token[i][1]))"
+              ng-hide="yellow_completed[0]" (click)="tokenPlay(yellow_token[i][2])"><fa-icon [icon]="faChessPawn" class="px-1.5"
+              [style.border]="!yellow_token_status[i] ? '2px solid #000' : ''"
+                appYellowToken></fa-icon></button></div>
 
-        <div *ngFor="let i of buttonArray"><button id = "yellow1" [disabled]="yellow_token_status[i]" *ngIf="((num2==yellow_token[i][0] && num == yellow_token[i][1]))"
-      ng-hide = "yellow_completed[0]" (click) = "tokenPlay(yellow_token[i][2])"><fa-icon [icon]="faChessPawn" appYellowToken></fa-icon></button></div>
+          <div class="flex items-center justify-center" *ngFor="let i of buttonArray"><button id="green1"
+              [disabled]="green_token_status[i]" *ngIf="((num2==green_token[i][0] && num == green_token[i][1]))"
+              ng-hide="green_completed[0]" (click)="tokenPlay(green_token[i][2])"><fa-icon [icon]="faChessPawn" class="px-1.5"
+              [style.border]="!green_token_status[i] ? '2px solid #000' : ''"
+                appGreenToken></fa-icon></button></div>
 
-      <div *ngFor="let i of buttonArray"><button id = "green1" [disabled]="green_token_status[i]" *ngIf="((num2==green_token[i][0] && num == green_token[i][1]))"
-      ng-hide = "green_completed[0]"  (click) = "tokenPlay(green_token[i][2])"><fa-icon [icon]="faChessPawn" appGreenToken></fa-icon></button></div>
-
-    </td>
-  </tr>
-</table>
-
-<h4 style="margin-left: 46%;  margin-top: 1%;"> player {{player_turn[num]}} turn</h4>
-
-<button [disabled] = "diceRoll" id = "diceButton" style=" float: left;;margin-left: 47%; width: 6%; margin-right: 2%; margin-top: 0%;" (click)="rollDice()" id = "dice">Roll A Dice</button>
-
-<div style="margin-left: 5%;">
-  <fa-icon style="font-size: 35px;" *ngIf = "dice_numbers == 6" [icon] = "faDice6"></fa-icon>
-  <fa-icon style="font-size: 35px;" *ngIf = "dice_numbers == 5" [icon] = "faDice5"></fa-icon>
-  <fa-icon style="font-size: 35px;" *ngIf = "dice_numbers == 4" [icon] = "faDice4"></fa-icon>
-  <fa-icon style="font-size: 35px;" *ngIf = "dice_numbers == 3" [icon] = "faDice3"></fa-icon>
-  <fa-icon style="font-size: 35px;" *ngIf = "dice_numbers == 2" [icon] = "faDice2"></fa-icon>
-  <fa-icon style="font-size: 35px;" *ngIf = "dice_numbers == 1" [icon] = "faDice1"></fa-icon>
-</div>
+        </td>
+      </tr>
+    </table>
+  </div>
