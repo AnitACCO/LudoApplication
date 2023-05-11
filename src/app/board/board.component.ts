@@ -304,7 +304,7 @@ export class BoardComponent {
       for(let i = 0; i < 4;i++){
         if (this.playing_token != this.alltokenrArray[i]) {
           for(let j = 0; j < 4; j++){
-            if (this.playing_token[id][0] == this.alltokenrArray[i][0][0] && this.playing_token[id][1] == this.alltokenrArray[i][0][1]) {
+            if (this.playing_token[id][0] == this.alltokenrArray[i][j][0] && this.playing_token[id][1] == this.alltokenrArray[i][j][1]) {
               this.alltokenrArray[i][j][0] = this.allTokenStart[i][j][0]
               this.alltokenrArray[i][j][1] = this.allTokenStart[i][j][1]
             }
